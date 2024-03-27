@@ -85,9 +85,9 @@ class SubworkflowTestYmlBuilder(ComponentCommand):
                 choices=self.components_from_repo(self.org),
                 style=nf_core.utils.nfcore_question_style,
             ).unsafe_ask()
-        self.subworkflow_dir = os.path.join("subworkflows", self.modules_repo.repo_path, self.subworkflow)
+        self.subworkflow_dir = os.path.join("subworkflows", "nf-scil", self.subworkflow)
         self.subworkflow_test_main = os.path.join(
-            "tests", "subworkflows", self.modules_repo.repo_path, self.subworkflow, "main.nf"
+            "tests", "subworkflows", "nf-scil", self.subworkflow, "main.nf"
         )
 
         # First, sanity check that the module directory exists
@@ -103,7 +103,7 @@ class SubworkflowTestYmlBuilder(ComponentCommand):
 
         # Get the output YAML file / check it does not already exist
         while self.test_yml_output_path is None:
-            default_val = f"tests/subworkflows/{self.modules_repo.repo_path}/{self.subworkflow}/test.yml"
+            default_val = f"tests/subworkflows/nf-scil/{self.subworkflow}/test.yml"
             if self.no_prompts:
                 self.test_yml_output_path = default_val
             else:
@@ -176,7 +176,7 @@ class SubworkflowTestYmlBuilder(ComponentCommand):
                 ep_test["name"] = rich.prompt.Prompt.ask("[violet]Test name", default=default_val).strip()
 
         while ep_test["command"] == "":
-            default_val = f"nextflow run ./tests/subworkflows/{self.modules_repo.repo_path}/{self.subworkflow} -entry {entry_point} -c ./tests/config/nextflow.config"
+            default_val = f"nextflow run ./tests/subworkflows/nf-scil/{self.subworkflow} -entry {entry_point} -c ./tests/config/nextflow.config"
             if self.no_prompts:
                 ep_test["command"] = default_val
             else:
